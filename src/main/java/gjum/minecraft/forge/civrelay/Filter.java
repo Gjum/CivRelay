@@ -5,10 +5,18 @@ import com.google.gson.annotations.Expose;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.TimeZone;
+
+import static gjum.minecraft.forge.civrelay.Condition.Target.GROUP;
+import static gjum.minecraft.forge.civrelay.Condition.Test.IN_LIST;
 
 public class Filter {
     private static final Gson j = new Gson();
+
+    public static final Condition EXAMPLE_CONDITION = new Condition().setTarget(GROUP).setTest(IN_LIST).setTestArg("MyGroup, MyOtherGroup");
 
     @Expose
     public String description = "";

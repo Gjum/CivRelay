@@ -26,6 +26,7 @@ import static org.lwjgl.input.Keyboard.KEY_NONE;
         modid = CivRelayMod.MOD_ID,
         name = CivRelayMod.MOD_NAME,
         version = CivRelayMod.VERSION,
+        guiFactory = "gjum.minecraft.forge.civrelay.GuiFactory",
         clientSideOnly = true)
 public class CivRelayMod {
     public static final String MOD_ID = "civrelay";
@@ -43,6 +44,7 @@ public class CivRelayMod {
     private Collection<String> previousPlayerList = Collections.EMPTY_LIST;
 
     private final KeyBinding toggleEnabledKey = new KeyBinding(MOD_ID + ".key.toggleEnabled", KEY_NONE, MOD_NAME);
+    private final KeyBinding openMenuKey = new KeyBinding(MOD_ID + ".key.openGui", KEY_NONE, MOD_NAME);
 
     private long nextPlayerListScan = 0;
 
@@ -62,6 +64,7 @@ public class CivRelayMod {
         MinecraftForge.EVENT_BUS.register(this);
 
         ClientRegistry.registerKeyBinding(toggleEnabledKey);
+        ClientRegistry.registerKeyBinding(openMenuKey);
     }
 
     @SubscribeEvent
@@ -127,6 +130,9 @@ public class CivRelayMod {
         try {
             if (toggleEnabledKey.isPressed()) {
                 Config.instance.modEnabled = !Config.instance.modEnabled;
+            }
+            if (openMenuKey.isPressed()) {
+                mc.displayGuiScreen(new SettingsGui(null));
             }
         } catch (Exception e) {
             if (inhibitStacktraceUntil < System.currentTimeMillis()) {
