@@ -1,0 +1,12 @@
+[{
+  "modid": "civrelay",
+  "name": "CivRelay",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://github.com/Gjum/CivRelay",
+  "authorList": ["Gjum"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}]

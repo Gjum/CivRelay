@@ -16,7 +16,7 @@ Sends alerts to Discord channels.
     - From the Escape menu: `Mods config`, select `CivRelay` on the left, then click `Config` at the bottom left
 1. Create a new Filter
 1. Paste the webhook url, enter the game address you play on, change other options if you like
-1. Click `Save and exit`
+1. Click `Save and close`
 
 <!-- TODO screenshots -->
 
