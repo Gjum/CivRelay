@@ -60,7 +60,7 @@ public class Condition {
         IN_LIST, CONTAINS, EXACTLY, BETWEEN;
 
         public boolean apply(String testStr, String valueStr) {
-            if (valueStr == null) valueStr = "";
+            if (valueStr == null) valueStr = "null";
             // TODO tests could be cached, benchmark this
             switch (this) {
                 case EXACTLY:
