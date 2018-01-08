@@ -45,7 +45,7 @@ public class ElementLabel extends ElementBase {
                 throw new IllegalStateException("Unexpected alignment " + alignment);
         }
         final int dy = (currentSize.y - mc.fontRenderer.FONT_HEIGHT) / 2; // TODO configure vertical alignment
-        mc.fontRenderer.drawStringWithShadow(text, x, coords.y + dy, color);
+        mc.fontRenderer.drawStringWithShadow(text, x + 3, coords.y + 1 + dy, color);
     }
 
     @Override

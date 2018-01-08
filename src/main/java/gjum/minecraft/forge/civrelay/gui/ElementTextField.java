@@ -77,14 +77,14 @@ public class ElementTextField extends ElementBase {
 
     @Override
     public void setCoords(Vec2 topLeft) {
-        textField.x = topLeft.x;
-        textField.y = topLeft.y;
+        textField.x = topLeft.x + 2;
+        textField.y = topLeft.y + 2;
     }
 
     @Override
     public void setSize(Vec2 size) {
         super.setSize(size);
-        textField.width = size.x;
-        textField.height = size.y;
+        textField.width = size.x - 4;
+        textField.height = size.y - 4;
     }
 }
