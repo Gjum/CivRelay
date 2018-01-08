@@ -33,11 +33,11 @@ public class Vec2 {
         return a > b ? a : b;
     }
 
-    public static int getDim(Vec2 size, Direction direction) {
+    public int getDim(Direction direction) {
         if (direction == ROW) {
-            return size.x;
+            return x;
         } else {
-            return size.y;
+            return y;
         }
     }
 

@@ -33,11 +33,11 @@ public class LayoutContainer implements LayoutBoundingBox {
             final Vec2 sizeMax = child.getLayoutConstraint().getMaxSize();
             final Vec2 sizeMin = child.getLayoutConstraint().getMinSize();
 
-            mainMax += Vec2.getDim(sizeMax, direction);
-            otherMax = Vec2.max(otherMax, Vec2.getDim(sizeMax, direction.other()));
+            mainMax += sizeMax.getDim(direction);
+            otherMax = Vec2.max(otherMax, sizeMax.getDim(direction.other()));
 
-            mainMin += Vec2.getDim(sizeMin, direction);
-            otherMin = Vec2.max(otherMin, Vec2.getDim(sizeMin, direction.other()));
+            mainMin += sizeMin.getDim(direction);
+            otherMin = Vec2.max(otherMin, sizeMin.getDim(direction.other()));
         }
 
         final Vec2 maxSize = Vec2.setDims(mainMax, otherMax, direction);
@@ -56,18 +56,18 @@ public class LayoutContainer implements LayoutBoundingBox {
 
     @Override
     public void setCoords(Vec2 topLeft) {
-        int main = Vec2.getDim(topLeft, direction);
-        int other = Vec2.getDim(topLeft, direction.other());
+        int main = topLeft.getDim(direction);
+        int other = topLeft.getDim(direction.other());
         for (LayoutBoundingBox child : children) {
             child.setCoords(Vec2.setDims(main, other, direction));
-            main += Vec2.getDim(child.getCurrentSize(), direction);
+            main += child.getCurrentSize().getDim(direction);
         }
     }
 
     @Override
     public void setSize(Vec2 availableSize) {
-        final int mainAvail = Vec2.getDim(availableSize, direction);
-        final int otherAvail = Vec2.getDim(availableSize, direction.other());
+        final int mainAvail = availableSize.getDim(direction);
+        final int otherAvail = availableSize.getDim(direction.other());
 
         final ArrayList<LayoutBoundingBox> flex = new ArrayList<>();
         int distributable = mainAvail;
@@ -75,12 +75,12 @@ public class LayoutContainer implements LayoutBoundingBox {
         int totalWeights = 0;
         for (LayoutBoundingBox child : children) {
             final LayoutConstraint constraint = child.getLayoutConstraint();
-            final int current = Vec2.getDim(constraint.getMinSize(), direction);
+            final int current = constraint.getMinSize().getDim(direction);
 
             child.setSize(Vec2.setDims(current, otherAvail, direction));
             distributable -= current;
 
-            final int weight = Vec2.getDim(constraint.getWeight(), direction);
+            final int weight = constraint.getWeight().getDim(direction);
             if (weight > 0) {
                 // flexible, assign later
                 totalWeights += weight;
@@ -103,9 +103,9 @@ public class LayoutContainer implements LayoutBoundingBox {
 //            System.out.println(String.format("Distributing %s among %s with total weight of %s", currentDistributable, currentFlex.size(), currentWeights));
 
             for (LayoutBoundingBox child : currentFlex) {
-                final int oldSize = Vec2.getDim(child.getCurrentSize(), direction);
-                final int max = Vec2.getDim(child.getLayoutConstraint().getMaxSize(), direction);
-                final int weight = Vec2.getDim(child.getLayoutConstraint().getWeight(), direction);
+                final int oldSize = child.getCurrentSize().getDim(direction);
+                final int max = child.getLayoutConstraint().getMaxSize().getDim(direction);
+                final int weight = child.getLayoutConstraint().getWeight().getDim(direction);
                 int newSize = oldSize + distributable * weight / currentWeights;
                 if (newSize < max) {
                     // still flexible, assign later
@@ -137,128 +137,4 @@ public class LayoutContainer implements LayoutBoundingBox {
         layoutWeight = weight;
         return this;
     }
-
-    //    void ArrangeGrid(Container container) {
-//        Insets insets = container.getInsets();
-//        Component[] components = container.getComponents();
-//        Rectangle rectangle = new Rectangle();
-//        if (components.length == 0 && (this._columnWidths == null || this._columnWidths.length == 0) && (this._rowHeights == null || this._rowHeights.length == 0)) {
-//            return;
-//        }
-//
-//        GridBagLayoutInfo layoutInfo = this._getLayoutInfo(container, 2);
-//        Dimension dimension = this._getMinSize(container, layoutInfo);
-//        if (container.width < dimension.width || container.height < dimension.height) {
-//            layoutInfo = this._getLayoutInfo(container, 1);
-//            dimension = this._getMinSize(container, layoutInfo);
-//        }
-//
-//        rectangle.width = dimension.width;
-//        rectangle.height = dimension.height;
-//        int remainingWidth = container.width - rectangle.width;
-//        int i; // loops
-//        double var12;
-//        int var15;
-//        if (remainingWidth != 0) {
-//            var12 = 0.0D;
-//
-//            for (i = 0; i < layoutInfo.width; ++i) {
-//                var12 += layoutInfo.weightX[i];
-//            }
-//
-//            if (var12 > 0.0D) {
-//                for (i = 0; i < layoutInfo.width; ++i) {
-//                    var15 = (int) ((double) remainingWidth * layoutInfo.weightX[i] / var12);
-//                    layoutInfo.minWidth[i] += var15;
-//                    rectangle.width += var15;
-//                    if (layoutInfo.minWidth[i] < 0) {
-//                        rectangle.width -= layoutInfo.minWidth[i];
-//                        layoutInfo.minWidth[i] = 0;
-//                    }
-//                }
-//            }
-//
-//            remainingWidth = container.width - rectangle.width;
-//        } else {
-//            remainingWidth = 0;
-//        }
-//
-//        int var11 = container.height - rectangle.height;
-//        if (var11 != 0) {
-//            var12 = 0.0D;
-//
-//            for (i = 0; i < layoutInfo.height; ++i) {
-//                var12 += layoutInfo.weightY[i];
-//            }
-//
-//            if (var12 > 0.0D) {
-//                for (i = 0; i < layoutInfo.height; ++i) {
-//                    var15 = (int) ((double) var11 * layoutInfo.weightY[i] / var12);
-//                    layoutInfo.minHeight[i] += var15;
-//                    rectangle.height += var15;
-//                    if (layoutInfo.minHeight[i] < 0) {
-//                        rectangle.height -= layoutInfo.minHeight[i];
-//                        layoutInfo.minHeight[i] = 0;
-//                    }
-//                }
-//            }
-//
-//            var11 = container.height - rectangle.height;
-//        } else {
-//            var11 = 0;
-//        }
-//
-//        layoutInfo.startx = remainingWidth / 2 + insets.left;
-//        layoutInfo.starty = var11 / 2 + insets.top;
-//
-//        for (Component component : components) {
-//            if (component.isVisible()) {
-//                GridBagConstraints var4 = this._lookupConstraints(component);
-//                rectangle.x = layoutInfo.startx;
-//
-//                for (i = 0; i < var4.tempX; ++i) {
-//                    rectangle.x += layoutInfo.minWidth[i];
-//                }
-//
-//                rectangle.y = layoutInfo.starty;
-//
-//                for (i = 0; i < var4.tempY; ++i) {
-//                    rectangle.y += layoutInfo.minHeight[i];
-//                }
-//
-//                rectangle.width = 0;
-//
-//                for (i = var4.tempX; i < var4.tempX + var4.tempWidth; ++i) {
-//                    rectangle.width += layoutInfo.minWidth[i];
-//                }
-//
-//                rectangle.height = 0;
-//
-//                for (i = var4.tempY; i < var4.tempY + var4.tempHeight; ++i) {
-//                    rectangle.height += layoutInfo.minHeight[i];
-//                }
-//
-//                this._componentAdjusting = component;
-//                this._adjustForGravity(var4, rectangle);
-//                if (rectangle.x < 0) {
-//                    rectangle.width += rectangle.x;
-//                    rectangle.x = 0;
-//                }
-//
-//                if (rectangle.y < 0) {
-//                    rectangle.height += rectangle.y;
-//                    rectangle.y = 0;
-//                }
-//
-//                if (rectangle.width > 0 && rectangle.height > 0) {
-//                    if (component.x != rectangle.x || component.y != rectangle.y || component.width != rectangle.width || component.height != rectangle.height) {
-//                        component.setBounds(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
-//                    }
-//                } else {
-//                    component.setBounds(0, 0, 0, 0);
-//                }
-//            }
-//        }
-//    }
-
 }
