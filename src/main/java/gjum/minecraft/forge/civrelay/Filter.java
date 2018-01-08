@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.stream.Collectors;
 
 import static gjum.minecraft.forge.civrelay.Condition.Target.GROUP;
 import static gjum.minecraft.forge.civrelay.Condition.Test.IN_LIST;
@@ -75,9 +76,19 @@ public class Filter {
         return this;
     }
 
-    private void stopWebhookInstance() {
-        if (CivRelayMod.instance == null) return;
-        DiscordWebhook.stopDiscord(webhookAddress);
+    public Filter makeCopy() {
+        Filter filter = new Filter();
+
+        filter.description = this.description;
+        filter.setEnabled(this.isEnabled());
+        filter.conditions.addAll(this.conditions.stream()
+                .map(Condition::makeCopy).collect(Collectors.toList()));
+        filter.eventType = this.eventType;
+        filter.format = this.format;
+        filter.gameAddress = this.gameAddress;
+        filter.setWebhookAddress(this.getWebhookAddress());
+
+        return filter;
     }
 
     /**
@@ -143,5 +154,10 @@ public class Filter {
         return j.toJson(str)
                 .replaceAll("^\"|\"$", "")
                 .replaceAll("\\$", "\\\\\\$");
+    }
+
+    private void stopWebhookInstance() {
+        if (CivRelayMod.instance == null) return;
+        DiscordWebhook.stopDiscord(webhookAddress);
     }
 }

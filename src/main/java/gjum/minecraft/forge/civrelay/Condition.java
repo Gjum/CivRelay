@@ -39,6 +39,14 @@ public class Condition {
         return this;
     }
 
+    public Condition makeCopy() {
+        return new Condition()
+                .setTarget(target)
+                .setTest(test)
+                .setTestArg(testArg)
+                .setNegate(negate);
+    }
+
     enum Target {
         ACTION(Event::getAction),
         CHAT_MSG(Event::getChatMessage),
