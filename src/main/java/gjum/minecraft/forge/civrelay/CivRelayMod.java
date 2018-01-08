@@ -1,7 +1,6 @@
 package gjum.minecraft.forge.civrelay;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.settings.KeyBinding;
@@ -18,7 +17,9 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 import static org.lwjgl.input.Keyboard.KEY_NONE;
 
@@ -143,15 +144,22 @@ public class CivRelayMod {
     }
 
     private void emitEvent(Event event) {
-        String gameAddress = "<singleplayer>";
-        final ServerData currentServerData = mc.getCurrentServerData();
-        if (currentServerData != null) gameAddress = currentServerData.serverIP;
-
         for (Filter filter : Config.instance.filters) {
-            if (filter.test(event, gameAddress)) {
+            if (filter.test(event, getCurrentGameAddress())) {
                 DiscordWebhook discord = DiscordWebhook.getOrStartDiscord(filter.getWebhookAddress());
                 discord.pushJson(filter.formatEvent(event));
             }
+        }
+    }
+
+    public static String getCurrentGameAddress() {
+        try {
+            if (mc.player.connection.getNetworkManager().isLocalChannel()) {
+                return "<singleplayer>";
+            }
+            return mc.getCurrentServerData().serverIP;
+        } catch (Exception e) {
+            return "?";
         }
     }
 }
