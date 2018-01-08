@@ -18,38 +18,44 @@ public class SettingsGui extends GuiBase {
 
     @Override
     public void buildLayout() {
+        final Config config = Config.instance;
+        final Vec2 margin = new Vec2(10, 10);
+
+        // TODO button to reload config from file
+
         final LayoutContainer elementsContainer = new LayoutContainer(COLUMN)
-                .add(new LayoutSpacer(new Vec2(10, 10)))
-                .add(new ElementLabel(this, MOD_NAME + " Settings", ALIGN_CENTER));
+                .add(new ElementLabel(this, MOD_NAME + " Settings", ALIGN_CENTER))
+                .add(new LayoutSpacer(margin));
 
         final LayoutContainer listControlsRow = new LayoutContainer(ROW)
                 .add(new ElementButton(this, () -> {
-                    final Filter filter = new Filter();
-                    filter.conditions.add(Filter.EXAMPLE_CONDITION);
-                    Config.instance.filters.add(filter);
+                    final Filter filter;
+                    if (config.filters.size() <= 0) filter = new Filter();
+                    else filter = config.filters.get(config.filters.size() - 1).makeCopy();
+                    config.filters.add(filter);
                     mc.displayGuiScreen(new FilterGui(new SettingsGui(parentScreen), filter));
                 }, "Add Filter"))
 
-                .add(new LayoutSpacer(new Vec2(10, 10)))
+                .add(new LayoutSpacer(margin))
                 .add(new LayoutSpacer())
 
                 .add(new ElementCycleButton(this, (state) -> {
-                    Config.instance.modEnabled = "Mod enabled".equals(state);
-                    Config.instance.save(null);
-                }, (Config.instance.modEnabled ? "Mod enabled" : "Mod disabled"),
+                    config.modEnabled = "Mod enabled".equals(state);
+                    config.save(null);
+                }, (config.modEnabled ? "Mod enabled" : "Mod disabled"),
                         "Mod enabled", "Mod disabled"));
         elementsContainer
-                .add(new LayoutSpacer(new Vec2(10, 10)))
-                .add(listControlsRow);
+                .add(listControlsRow)
+                .add(new LayoutSpacer(margin));
 
-        for (Filter filter : Config.instance.filters) {
+        for (Filter filter : config.filters) {
             final ElementLabel label = new ElementLabel(this, filter.getDescription(), ALIGN_LEFT);
             label.setColor(filter.isEnabled() ? Color.WHITE : Color.GRAY);
 
             final LayoutContainer filterRow = new LayoutContainer(ROW)
                     .add(label)
 
-                    .add(new LayoutSpacer(new Vec2(10, 10)))
+                    .add(new LayoutSpacer(margin))
                     .add(new LayoutSpacer())
 
                     .add(new ElementButton(this, () -> {
@@ -60,27 +66,34 @@ public class SettingsGui extends GuiBase {
                         final boolean enabled = "Enabled".equals(status);
                         filter.setEnabled(enabled);
                         label.setColor(enabled ? Color.WHITE : Color.GRAY);
-                        Config.instance.save(null);
+                        config.save(null);
                     }, (filter.isEnabled() ? "Enabled" : "Disabled"),
                             "Enabled", "Disabled"));
 
-            elementsContainer
-                    .add(new LayoutSpacer(new Vec2(10, 10)))
-                    .add(filterRow);
+            elementsContainer.add(filterRow);
         }
 
         elementsContainer.add(new LayoutSpacer());
 
         final LayoutContainer lastRow = new LayoutContainer(ROW)
-                .add(new LayoutSpacer())
                 .add(new ElementButton(this, () -> {
-                    Config.instance.save(null);
+                    config.save(null);
                     mc.displayGuiScreen(parentScreen);
-                }, "Save and close"));
+                }, "Save and back")
+                        .setWeight(new Vec2(1, 0)))
+
+                .add(new LayoutSpacer())
+
+                .add(new ElementButton(this, () -> {
+                    config.save(null);
+                    mc.displayGuiScreen(null);
+                }, "Save and close")
+                        .setWeight(new Vec2(1, 0)));
+
         elementsContainer
-                .add(new LayoutSpacer(new Vec2(10, 10)))
+                .add(new LayoutSpacer(margin))
                 .add(lastRow)
-                .add(new LayoutSpacer(new Vec2(10, 10)));
+                .add(new LayoutSpacer(margin));
 
         layoutRoot = new LayoutContainer(ROW)
                 .add(new LayoutSpacer())
@@ -88,5 +101,5 @@ public class SettingsGui extends GuiBase {
                 .add(new LayoutSpacer());
     }
 
-    // TODO highlight erroneous filters in onChanged
+    // TODO highlight erroneous filters
 }

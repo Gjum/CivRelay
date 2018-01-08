@@ -1,6 +1,7 @@
 package gjum.minecraft.forge.civrelay.gui;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -17,8 +18,13 @@ public class LayoutContainer implements LayoutBoundingBox {
         this.direction = direction;
     }
 
-    public LayoutContainer add(LayoutBoundingBox e) {
-        children.add(e);
+    public LayoutContainer add(LayoutBoundingBox element) {
+        children.add(element);
+        return this;
+    }
+
+    public LayoutContainer addAll(Collection<LayoutBoundingBox> elements) {
+        children.addAll(elements);
         return this;
     }
 

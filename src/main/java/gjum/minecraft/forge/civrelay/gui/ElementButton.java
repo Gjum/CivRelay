@@ -29,6 +29,11 @@ public class ElementButton extends ElementBase {
         return this;
     }
 
+    public ElementButton setEnabled(boolean enabled) {
+        button.enabled = enabled;
+        return this;
+    }
+
     @Override
     public ElementBase setColor(Color color) {
         button.packedFGColour = color.getRGB();
