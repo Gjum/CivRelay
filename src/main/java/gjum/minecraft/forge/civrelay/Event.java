@@ -21,13 +21,6 @@ public interface Event {
         Action(String msg) {
             this.msg = msg;
         }
-
-        public static Action fromSnitchMatch(String activityText) {
-            return "entered snitch at".equals(activityText) ? ENTER :
-                    "logged in to snitch at".equals(activityText) ? LOGIN :
-                            "logged out in snitch at".equals(activityText) ? LOGOUT :
-                                    UNKNOWN;
-        }
     }
 
     Type getType();
@@ -43,6 +36,8 @@ public interface Event {
     String getPlayer();
 
     String getSnitch();
+
+    String getWorld();
 
     int getX();
 

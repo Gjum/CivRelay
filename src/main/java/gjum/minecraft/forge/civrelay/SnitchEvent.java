@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static gjum.minecraft.forge.civrelay.Event.Action.*;
+
 public class SnitchEvent implements Event {
     public static final Pattern snitchAlertPattern = Pattern.compile("\\s*\\*\\s*([^\\s]*)\\s\\b(entered snitch at|logged out in snitch at|logged in to snitch at)\\b\\s*([^\\s]*)\\s\\[([^\\s]*)\\s([-\\d]*)\\s([-\\d]*)\\s([-\\d]*)\\]");
     public static final Pattern snitchAlertHoverPattern = Pattern.compile("^(?i)\\s*Location:\\s*\\[(\\S+?) (-?[0-9]+) (-?[0-9]+) (-?[0-9]+)\\]\\s*Group:\\s*(\\S+?)\\s*Type:\\s*(Entry|Logging)\\s*(?:Cull:\\s*([0-9]+\\.[0-9]+)h?)?\\s*(?:Previous name:\\s*(\\S+?))?\\s*(?:Name:\\s*(\\S+?))?\\s*");
@@ -27,12 +29,19 @@ public class SnitchEvent implements Event {
         this.playerName = playerName;
         this.pos = new BlockPos(x, y, z);
         this.actionText = actionText;
-        this.action = Action.fromSnitchMatch(actionText);
+        this.action = actionFromSnitchMatch(actionText);
         this.snitchName = snitchName;
         this.world = world;
         this.group = group;
         this.snitchType = snitchType == null ? null : snitchType.toLowerCase();
         this.rawMessage = rawMessage;
+    }
+
+    private static Action actionFromSnitchMatch(String actionText) {
+        return "entered snitch at".equals(actionText) ? ENTER :
+                "logged in to snitch at".equals(actionText) ? LOGIN :
+                        "logged out in snitch at".equals(actionText) ? LOGOUT :
+                                UNKNOWN;
     }
 
     public static SnitchEvent fromChat(ITextComponent rawMessage) {
@@ -106,6 +115,11 @@ public class SnitchEvent implements Event {
     @Override
     public String getSnitch() {
         return snitchName;
+    }
+
+    @Override
+    public String getWorld() {
+        return world;
     }
 
     @Override

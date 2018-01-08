@@ -45,11 +45,9 @@ All the `<...>` will be replaced by various alert information:
 | \<z\>               | -789                       |
 | \<rz\>              | -790                       |
 <!--| \<chatMsg\>         | Hello!                     |-->
+| \<world\>           | world \| world_the_end     |
 <!--| \<snitchType\>      | Entry \| Logging           |-->
 <!--| \<shortSnitchType\> | E \| L                     |-->
-<!--| \<world\>           | world \| world_the_end     |-->
-
-<!--Standard world names are replaced with their friendlier variants (see table).-->
 
 [![Travis build Status](https://travis-ci.org/Gjum/CivRelay.svg?branch=master)](https://travis-ci.org/Gjum/CivRelay)
 

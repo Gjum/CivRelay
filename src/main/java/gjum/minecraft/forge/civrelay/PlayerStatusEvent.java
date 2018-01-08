@@ -46,6 +46,11 @@ public class PlayerStatusEvent implements Event {
     }
 
     @Override
+    public String getWorld() {
+        return null;
+    }
+
+    @Override
     public int getX() {
         return 0;
     }

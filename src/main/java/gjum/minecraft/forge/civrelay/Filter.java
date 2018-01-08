@@ -49,11 +49,13 @@ public class Filter {
         return description;
     }
 
-    public void setEnabled(boolean enabled) {
+    public Filter setEnabled(boolean enabled) {
         this.enabled = enabled;
         if (!enabled) {
             stopWebhookInstance();
         }
+
+        return this;
     }
 
     public boolean isEnabled() {
@@ -64,11 +66,13 @@ public class Filter {
         return webhookAddress;
     }
 
-    public void setWebhookAddress(String address) {
+    public Filter setWebhookAddress(String address) {
         if (!webhookAddress.equals(address)) {
             stopWebhookInstance();
         }
         webhookAddress = address;
+
+        return this;
     }
 
     private void stopWebhookInstance() {
@@ -102,7 +106,6 @@ public class Filter {
         final String dateFormat = "HH:mm:ss";
         String str = format;
 
-        // TODO world
         // TODO snitch type
 
         final DateFormat df = new SimpleDateFormat(dateFormat);
@@ -115,6 +118,7 @@ public class Filter {
         str = str.replaceAll("<event>", event.getType().description);
         str = str.replaceAll("<action>", event.getAction());
         str = str.replaceAll("<actionText>", event.getActionText());
+        str = str.replaceAll("<world>", event.getWorld());
 
         str = str.replaceAll("<chatMsg>", safeStr(event.getChatMessage()));
         str = str.replaceAll("<group>", safeStr(event.getGroup()));
