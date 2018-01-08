@@ -112,11 +112,16 @@ public class CivRelayMod {
         try {
             if (!Config.instance.modEnabled) return;
 
-            SnitchEvent alert = SnitchEvent.fromChat(event.getMessage());
-            if (alert != null) {
-                emitEvent(alert);
-            } else {
-                // TODO check for group chat event
+            final SnitchEvent snitchEvent = SnitchEvent.fromChat(event.getMessage());
+            if (snitchEvent != null) {
+                emitEvent(snitchEvent);
+                return;
+            }
+
+            final ChatEvent chatEvent = ChatEvent.fromChat(event.getMessage());
+            if (chatEvent != null) {
+                emitEvent(chatEvent);
+                return;
             }
         } catch (Exception e) {
             if (inhibitStacktraceUntil < System.currentTimeMillis()) {

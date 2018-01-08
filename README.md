@@ -44,8 +44,8 @@ All the `<...>` will be replaced by various alert information:
 | \<ry\>              | 60                         |
 | \<z\>               | -789                       |
 | \<rz\>              | -790                       |
-<!--| \<chatMsg\>         | Hello!                     |-->
 | \<world\>           | world \| world_the_end     |
+| \<chatMsg\>         | Hello!                     |
 <!--| \<snitchType\>      | Entry \| Logging           |-->
 <!--| \<shortSnitchType\> | E \| L                     |-->
 

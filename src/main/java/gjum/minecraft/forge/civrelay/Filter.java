@@ -140,6 +140,8 @@ public class Filter {
     }
 
     private static final String safeStr(String str) {
-        return j.toJson(str).replaceAll("^\"|\"$", "");
+        return j.toJson(str)
+                .replaceAll("^\"|\"$", "")
+                .replaceAll("\\$", "\\\\\\$");
     }
 }
