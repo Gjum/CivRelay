@@ -23,10 +23,6 @@ public class GuiBase extends GuiScreen {
         layoutRoot = new LayoutSpacer();
     }
 
-    public void onEscapePressed() {
-        mc.displayGuiScreen(parentScreen);
-    }
-
     public ElementBase addVisible(ElementBase element) {
         elements.add(element);
         return element;
@@ -101,7 +97,7 @@ public class GuiBase extends GuiScreen {
             }
         }
         if (keyCode == Keyboard.KEY_ESCAPE) {
-            onEscapePressed();
+            mc.displayGuiScreen(parentScreen);
         }
     }
 
