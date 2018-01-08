@@ -39,7 +39,7 @@ public class ElementTextField extends ElementBase {
 
         layoutConstraint = new LayoutConstraint()
                 .setMinSize(new Vec2(50, 20))
-                .setMaxSize(new Vec2(300, 20));
+                .setMaxSize(new Vec2(99999, 20));
     }
 
     public String getText() {

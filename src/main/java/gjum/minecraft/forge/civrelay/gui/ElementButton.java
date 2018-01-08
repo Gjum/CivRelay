@@ -13,15 +13,19 @@ public class ElementButton extends ElementBase {
         button = new GuiButton(getId(), 0, 0, text);
         this.clickHandler = clickHandler;
 
-        layoutConstraint = new LayoutConstraint().setFixedSize(
-                new Vec2(getStringWidth(text) + 6, 20));
+        layoutConstraint = new LayoutConstraint()
+                .setMinSize(new Vec2(getStringWidth(text) + 6, 20))
+                .setMaxSize(new Vec2(380, 20))
+                .setWeight(new Vec2(0, 0));
     }
 
     public ElementBase setText(String text) {
         button.displayString = text;
         // TODO instead of replacing, add this as an additional constraint
-        layoutConstraint = new LayoutConstraint().setMinSize(
-                new Vec2(getStringWidth(text) + 6, 20));
+        layoutConstraint = new LayoutConstraint()
+                .setMinSize(new Vec2(getStringWidth(text) + 6, 20))
+                .setMaxSize(new Vec2(380, 20))
+                .setWeight(new Vec2(0, 0));
         return this;
     }
 

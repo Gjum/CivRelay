@@ -34,7 +34,9 @@ public abstract class ElementBase implements LayoutBoundingBox {
     }
 
     public ElementBase setWeight(Vec2 weight) {
-        getLayoutConstraint().setWeight(weight);
+        int maxX = weight.x > 0 ? 99999 : getLayoutConstraint().getMaxSize().x;
+        int maxY = weight.y > 0 ? 99999 : getLayoutConstraint().getMaxSize().y;
+        getLayoutConstraint().setWeight(weight).setMaxSize(new Vec2(maxX, maxY));
         return this;
     }
 
