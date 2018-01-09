@@ -1,6 +1,6 @@
 ## CivRelay
 
-Sends alerts to Discord channels.
+Sends different alerts to different Discord channels: snitch alerts, group chat, player login/out
 
 [![GUI Screenshot](https://i.imgur.com/axsOG7a.png)](https://imgur.com/a/rd6mc)
 
