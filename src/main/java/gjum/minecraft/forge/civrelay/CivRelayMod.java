@@ -48,6 +48,7 @@ public class CivRelayMod {
     private final KeyBinding openMenuKey = new KeyBinding(MOD_ID + ".key.openGui", KEY_NONE, MOD_NAME);
 
     private long nextPlayerListScan = 0;
+    private DiscordWebhookThread discordWebhookThread;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -66,6 +67,8 @@ public class CivRelayMod {
 
         ClientRegistry.registerKeyBinding(toggleEnabledKey);
         ClientRegistry.registerKeyBinding(openMenuKey);
+
+        discordWebhookThread = new DiscordWebhookThread();
     }
 
     @SubscribeEvent
@@ -151,8 +154,7 @@ public class CivRelayMod {
     private void emitEvent(Event event) {
         for (Filter filter : Config.instance.filters) {
             if (filter.test(event, getCurrentGameAddress())) {
-                DiscordWebhook discord = DiscordWebhook.getOrStartDiscord(filter.getWebhookAddress());
-                discord.pushJson(filter.formatEvent(event));
+                discordWebhookThread.pushJsonTo(filter.formatEvent(event), filter.getWebhookAddress());
             }
         }
     }

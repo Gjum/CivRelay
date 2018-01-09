@@ -52,10 +52,6 @@ public class Filter {
 
     public Filter setEnabled(boolean enabled) {
         this.enabled = enabled;
-        if (!enabled) {
-            stopWebhookInstance();
-        }
-
         return this;
     }
 
@@ -68,11 +64,7 @@ public class Filter {
     }
 
     public Filter setWebhookAddress(String address) {
-        if (!webhookAddress.equals(address)) {
-            stopWebhookInstance();
-        }
         webhookAddress = address;
-
         return this;
     }
 
@@ -154,10 +146,5 @@ public class Filter {
         return j.toJson(str)
                 .replaceAll("^\"|\"$", "")
                 .replaceAll("\\$", "\\\\\\$");
-    }
-
-    private void stopWebhookInstance() {
-        if (CivRelayMod.instance == null) return;
-        DiscordWebhook.stopDiscord(webhookAddress);
     }
 }
