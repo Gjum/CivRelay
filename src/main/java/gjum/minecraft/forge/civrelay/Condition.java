@@ -78,7 +78,7 @@ public class Condition {
                     return Pattern.matches(".*" + testStr + ".*", valueStr);
 
                 case IN_LIST:
-                    final String[] entries = testStr.split("[ ,;]+");
+                    final String[] entries = testStr.split("[,;]+ *");
                     for (String entry : entries) {
                         if (valueStr.equals(entry)) return true;
                     }
