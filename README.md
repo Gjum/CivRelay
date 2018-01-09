@@ -2,6 +2,10 @@
 
 Sends alerts to Discord channels.
 
+[![GUI Screenshot](https://i.imgur.com/axsOG7a.png)](https://imgur.com/a/rd6mc)
+
+[More screenshots](https://imgur.com/a/rd6mc)
+
 ### How to Use
 
 1. Install Forge
@@ -17,8 +21,6 @@ Sends alerts to Discord channels.
 1. Create a new Filter
 1. Paste the webhook url, enter the game address you play on, change other options if you like
 1. Click `Save and close`
-
-<!-- TODO screenshots -->
 
 ### Alert Formatting
 
