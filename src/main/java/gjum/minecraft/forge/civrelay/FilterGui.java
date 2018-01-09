@@ -67,12 +67,12 @@ public class FilterGui extends GuiBase {
                 .add(new ElementTextField(this, format -> {
                     try {
                         new Gson().fromJson(format, Object.class);
-                        filter.format = format;
+                        filter.setFormat(format);
                         return true;
                     } catch (JsonSyntaxException e) {
                         return false;
                     }
-                }, filter.format));
+                }, filter.getFormat()));
 
         final ElementCycleButton eventTypeBtn = new ElementCycleButton(this, status -> {
             filter.eventType = Event.Type.valueOf(status);

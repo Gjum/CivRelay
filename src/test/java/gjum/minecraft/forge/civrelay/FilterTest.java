@@ -36,7 +36,7 @@ public class FilterTest extends TestCase {
 
     public void testFormat() throws Exception {
         final Filter filter = new Filter();
-        filter.format = "<player> <action> <snitch> (<group>) [<x> <y> <z>] ~[<rx> <ry> <rz>]";
+        filter.setFormat("<player> <action> <snitch> (<group>) [<x> <y> <z>] ~[<rx> <ry> <rz>]");
 
         assertEquals("me Enter My_Snitch (MyGroup) [-11 21 -46] ~[-10 20 -50]", filter.formatEvent(new SnitchEvent("me", -11, 21, -46, "entered snitch at", "My_Snitch", "world", "MyGroup", "Entry", new TextComponentString(""))));
     }
