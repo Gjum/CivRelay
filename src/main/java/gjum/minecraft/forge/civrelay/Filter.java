@@ -1,6 +1,7 @@
 package gjum.minecraft.forge.civrelay;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 
 import java.text.DateFormat;
@@ -15,7 +16,7 @@ import static gjum.minecraft.forge.civrelay.Condition.Target.GROUP;
 import static gjum.minecraft.forge.civrelay.Condition.Test.IN_LIST;
 
 public class Filter {
-    private static final Gson j = new Gson();
+    private static final Gson j = new GsonBuilder().disableHtmlEscaping().create();
 
     public static final Condition EXAMPLE_CONDITION = new Condition().setTarget(GROUP).setTest(IN_LIST).setTestArg("MyGroup, MyOtherGroup");
 
