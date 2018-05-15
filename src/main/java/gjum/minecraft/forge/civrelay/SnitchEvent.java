@@ -138,15 +138,18 @@ public class SnitchEvent implements Event {
     }
 
     private static HoverEvent getHoverEvent(ITextComponent rawMessage) {
+        HoverEvent hover = rawMessage.getStyle().getHoverEvent();
+        if (hover != null) {
+            return hover;
+        }
         List<ITextComponent> siblings = rawMessage.getSiblings();
-        if (siblings.size() <= 0) {
-            return null;
+        if (siblings.size() > 0) {
+            ITextComponent hoverSiblingComponent = siblings.get(0);
+            HoverEvent hoverSibling = hoverSiblingComponent.getStyle().getHoverEvent();
+            if (hoverSibling != null) {
+                return hoverSibling;
+            }
         }
-        ITextComponent hoverComponent = siblings.get(0);
-        HoverEvent hover = hoverComponent.getStyle().getHoverEvent();
-        if (hover == null) {
-            return null;
-        }
-        return hover;
+        return null;
     }
 }
