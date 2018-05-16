@@ -51,6 +51,10 @@ public class Filter {
 
     public Filter setEnabled(boolean enabled) {
         this.enabled = enabled;
+        if (!enabled) {
+            stopWebhookInstance();
+        }
+
         return this;
     }
 
@@ -73,7 +77,11 @@ public class Filter {
     }
 
     public Filter setWebhookAddress(String address) {
+        if (!webhookAddress.equals(address)) {
+            stopWebhookInstance();
+        }
         webhookAddress = address;
+
         return this;
     }
 
@@ -117,5 +125,10 @@ public class Filter {
     public String formatEvent(Event event) {
         if (formatter == null) formatter = new Formatter(format);
         return formatter.formatEvent(event);
+    }
+
+    private void stopWebhookInstance() {
+        if (CivRelayMod.instance == null) return;
+        DiscordWebhook.stopDiscord(webhookAddress);
     }
 }
