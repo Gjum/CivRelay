@@ -115,6 +115,7 @@ public class Filter {
     }
 
     public String formatEvent(Event event) {
+        if (formatter == null) formatter = new Formatter(format);
         return formatter.formatEvent(event);
     }
 }
