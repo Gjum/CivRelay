@@ -34,6 +34,7 @@ All the `<...>` will be replaced by various alert information:
 |:--------------------|:---------------------------|
 | \<timeLocal\>       | 23:45:56                   |
 | \<timeUTC\>         | 18:45:56                   |
+| \<timeUnix\>        | 1526433193                 |
 | \<event\>           | Snitch \| Login/out        |
 | \<player\>          | ttk2                       |
 | \<snitch\>          | MySnitch                   |

@@ -26,8 +26,10 @@ public class Formatter {
         df.setTimeZone(TimeZone.getTimeZone("UTC"));
         final String timeUtc = df.format(new Date());
         final String timeLocal = new SimpleDateFormat(dateFormat).format(new Date());
+        final long timeUnix = System.currentTimeMillis() / 1000;
         str = str.replaceAll("<timeLocal>", timeLocal);
         str = str.replaceAll("<timeUTC>", timeUtc);
+        str = str.replaceAll("<timeUnix>", String.valueOf(timeUnix));
 
         str = str.replaceAll("<event>", event.getType().description);
         str = str.replaceAll("<action>", event.getAction());
