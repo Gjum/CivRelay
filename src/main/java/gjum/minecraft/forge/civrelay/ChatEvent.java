@@ -7,8 +7,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ChatEvent implements Event {
-    public static final Pattern groupChatPattern = Pattern.compile("\\[([^]:\\s]+)\\] ([^:\\s]+): (.*)");
-    public static final Pattern localChatPattern = Pattern.compile("([^:\\s]+): (.*)");
+    public static final Pattern groupChatPattern = Pattern.compile("\\[(\\S+)\\] ([a-zA-Z0-9_]{3,16}): (.+)");
+    public static final Pattern localChatPattern = Pattern.compile("<([a-zA-Z0-9_]{3,16})> (.+)");
 
     public final String group;
     public final String player;
