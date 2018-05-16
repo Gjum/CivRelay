@@ -1,4 +1,4 @@
-version = "0.2.1"
+version = "0.2.2"
 
 import org.ajoberstar.grgit.Grgit
 import org.ajoberstar.grgit.exception.GrgitException
