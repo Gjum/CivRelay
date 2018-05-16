@@ -41,7 +41,6 @@ public class DiscordWebhook extends Thread {
 
     public synchronized void pushJson(String json) {
         jsonQueue.add(json.getBytes(StandardCharsets.UTF_8));
-        interrupt();
     }
 
     public synchronized void end() {
@@ -49,15 +48,11 @@ public class DiscordWebhook extends Thread {
         interrupt();
     }
 
-    private synchronized byte[] popJson() {
-        return jsonQueue.poll();
-    }
-
     private void runLoop() throws IOException {
-        byte[] json = popJson();
+        byte[] json = jsonQueue.peek();
         if (json == null) {
             try {
-                Thread.sleep(10000);
+                Thread.sleep(1000);
             } catch (InterruptedException ignored) {
             }
             return; // jump back up to popJson
@@ -74,8 +69,29 @@ public class DiscordWebhook extends Thread {
             os.write(json);
             os.flush();
 
-            if (connection.getResponseCode() < 200 || 300 <= connection.getResponseCode()) {
+            if (connection.getResponseCode() == 429) {
+                final int retryAfter = connection.getHeaderFieldInt("Retry-After", 5000);
+                CivRelayMod.logger.error("Rate limit reached, retrying after " + retryAfter + "ms.");
+                try {
+                    Thread.sleep(retryAfter);
+                } catch (InterruptedException ignored) {
+                }
+            } else if (connection.getResponseCode() < 200 || 300 <= connection.getResponseCode()) {
                 CivRelayMod.logger.error(connection.getResponseCode() + ": " + connection.getResponseMessage());
+            } else {
+                jsonQueue.remove();
+                // if we've hit the rate limit, wait a bit longer
+                if (connection.getHeaderFieldInt("X-RateLimit-Remaining", 0) <= 0) {
+                    final long defaultWaitTime = 1; // if header is absent, continue after 1s by default
+                    final long currentTimeSec = System.currentTimeMillis() / 1000;
+                    final long reset = connection.getHeaderFieldLong("X-RateLimit-Reset", defaultWaitTime + currentTimeSec);
+                    if (reset > 0) {
+                        try {
+                            Thread.sleep(reset - currentTimeSec);
+                        } catch (InterruptedException ignored) {
+                        }
+                    }
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
