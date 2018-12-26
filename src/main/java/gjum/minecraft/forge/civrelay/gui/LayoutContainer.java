@@ -12,7 +12,7 @@ public class LayoutContainer implements LayoutBoundingBox {
     private final List<LayoutBoundingBox> children = new ArrayList<>();
 
     private Vec2 currentSize;
-    public Vec2 layoutWeight = new Vec2(0,0);
+    public Vec2 layoutWeight = new Vec2(0, 0);
 
     public LayoutContainer(Vec2.Direction direction) {
         this.direction = direction;
@@ -98,20 +98,19 @@ public class LayoutContainer implements LayoutBoundingBox {
         // - all space is distributed or
         // - all flex elements are maxed out or
         // - space cannot be distributed anymore (TODO integer division)
-        while (0 < distributable && distributable >= flex.size()) {
+        while (distributable > 0 && distributable >= flex.size()) {
             final ArrayList<LayoutBoundingBox> currentFlex = new ArrayList<>(flex);
             flex.clear();
 
             final int currentWeights = totalWeights;
             totalWeights = 0;
             int currentDistributable = distributable;
-//
-//            System.out.println(String.format("Distributing %s among %s with total weight of %s", currentDistributable, currentFlex.size(), currentWeights));
 
             for (LayoutBoundingBox child : currentFlex) {
                 final int oldSize = child.getCurrentSize().getDim(direction);
                 final int max = child.getLayoutConstraint().getMaxSize().getDim(direction);
                 final int weight = child.getLayoutConstraint().getWeight().getDim(direction);
+                // since we use integer rounding here, the last few pixels need manual distribution, see below
                 int newSize = oldSize + distributable * weight / currentWeights;
                 if (newSize < max) {
                     // still flexible, assign later
@@ -123,19 +122,30 @@ public class LayoutContainer implements LayoutBoundingBox {
 
                 child.setSize(Vec2.setDims(newSize, otherAvail, direction));
                 currentDistributable -= newSize - oldSize;
-
-//                System.out.println(String.format("Resizing %s from %s to %s",
-//                        child.getClass().getName(), oldSize, newSize));
             }
 
             if (distributable == currentDistributable) {
-                // can't distribute the remaining space
+                // nothing changed - couldn't distribute the remaining space
+                // this should never happen, as we should
+                // either distribute at least one pixel per flex entry,
+                // or (when we have less than flex.size() children left) the loop should exit
                 break;
             }
 
             distributable = currentDistributable;
         }
 
+        // distribute the last few pixels, this is < flex.size() and only occurs
+        // because we use integer rounding while distributing
+        for (LayoutBoundingBox child : flex) {
+            if (distributable <= 0) break;
+            final int oldSize = child.getCurrentSize().getDim(direction);
+            child.setSize(Vec2.setDims(1 + oldSize, otherAvail, direction));
+            distributable -= 1;
+        }
+
+        // practically the same as setting to availableSize,
+        // unless there are no flex elements for a direction
         currentSize = Vec2.setDims(mainAvail - distributable, otherAvail, direction);
     }
 
