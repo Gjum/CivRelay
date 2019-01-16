@@ -1,4 +1,4 @@
-package gjum.minecraft.forge.civrelay.gui;
+package gjum.minecraft.forge.gui;
 
 public class LayoutSpacer implements LayoutBoundingBox {
     private LayoutConstraint layoutConstraint;
@@ -8,7 +8,7 @@ public class LayoutSpacer implements LayoutBoundingBox {
         layoutConstraint = new LayoutConstraint()
                 .setWeight(new Vec2(1, 1))
                 .setMinSize(new Vec2(0, 0))
-                .setMaxSize(new Vec2(99999, 99999));
+                .setMaxSize(new Vec2(Integer.MAX_VALUE, Integer.MAX_VALUE));
     }
 
     public LayoutSpacer(Vec2 fixedSize) {

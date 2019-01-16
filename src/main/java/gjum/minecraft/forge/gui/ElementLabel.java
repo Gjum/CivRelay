@@ -1,11 +1,11 @@
-package gjum.minecraft.forge.civrelay.gui;
+package gjum.minecraft.forge.gui;
 
-import java.awt.*;
+import java.awt.Color;
 
 public class ElementLabel extends ElementBase {
     public enum Alignment {ALIGN_LEFT, ALIGN_CENTER, ALIGN_RIGHT}
 
-    private String text; // on change, update minSize/maxSize/idealSize too ... this would benefit much from a rewrite of the layout engine
+    private String text;
     public Alignment alignment;
     public Vec2 coords;
 
@@ -15,9 +15,14 @@ public class ElementLabel extends ElementBase {
         super(gui);
         this.text = text;
         this.alignment = alignment;
-
         layoutConstraint = new LayoutConstraint().setFixedSize(
                 new Vec2(getStringWidth(text) + 6, 20));
+    }
+
+    public void setText(String text) {
+        this.text = text;
+        layoutConstraint.setFixedSize(new Vec2(getStringWidth(text) + 6, 20));
+        // TODO update parent layout
     }
 
     @Override

@@ -1,8 +1,8 @@
-package gjum.minecraft.forge.civrelay.gui;
+package gjum.minecraft.forge.gui;
 
 import net.minecraft.client.gui.GuiButton;
 
-import java.awt.*;
+import java.awt.Color;
 
 public class ElementButton extends ElementBase {
     private final GuiButton button;
@@ -14,7 +14,7 @@ public class ElementButton extends ElementBase {
         this.clickHandler = clickHandler;
 
         layoutConstraint = new LayoutConstraint()
-                .setMinSize(new Vec2(getStringWidth(text) + 6, 20))
+                .setMinSize(new Vec2(Math.max(20, getStringWidth(text)) + 6, 20))
                 .setMaxSize(new Vec2(380, 20))
                 .setWeight(new Vec2(0, 0));
     }

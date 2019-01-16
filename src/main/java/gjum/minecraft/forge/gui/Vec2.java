@@ -1,6 +1,6 @@
-package gjum.minecraft.forge.civrelay.gui;
+package gjum.minecraft.forge.gui;
 
-import static gjum.minecraft.forge.civrelay.gui.Vec2.Direction.ROW;
+import static gjum.minecraft.forge.gui.Vec2.Direction.ROW;
 
 public class Vec2 {
     public final int x;

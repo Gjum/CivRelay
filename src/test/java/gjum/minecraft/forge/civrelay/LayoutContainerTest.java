@@ -1,6 +1,6 @@
 package gjum.minecraft.forge.civrelay;
 
-import gjum.minecraft.forge.civrelay.gui.Vec2;
+import gjum.minecraft.forge.gui.Vec2;
 import junit.framework.TestCase;
 import org.junit.Test;
 

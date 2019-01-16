@@ -1,4 +1,4 @@
-package gjum.minecraft.forge.civrelay.gui;
+package gjum.minecraft.forge.gui;
 
 public interface LayoutBoundingBox {
     LayoutConstraint getLayoutConstraint();

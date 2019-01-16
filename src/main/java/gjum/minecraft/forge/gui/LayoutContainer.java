@@ -1,4 +1,4 @@
-package gjum.minecraft.forge.civrelay.gui;
+package gjum.minecraft.forge.gui;
 
 import java.util.ArrayList;
 import java.util.Collection;

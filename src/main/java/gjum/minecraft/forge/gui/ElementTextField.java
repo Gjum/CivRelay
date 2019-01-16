@@ -1,10 +1,10 @@
-package gjum.minecraft.forge.civrelay.gui;
+package gjum.minecraft.forge.gui;
 
 import net.minecraft.client.gui.GuiPageButtonList;
 import net.minecraft.client.gui.GuiTextField;
 
 import javax.annotation.Nonnull;
-import java.awt.*;
+import java.awt.Color;
 import java.util.function.Predicate;
 
 public class ElementTextField extends ElementBase {
@@ -16,7 +16,7 @@ public class ElementTextField extends ElementBase {
         this.validator = validator;
 
         textField = new GuiTextField(getId(), mc.fontRenderer, 0, 0, 0, 0);
-        textField.setMaxStringLength(99999);
+        textField.setMaxStringLength(Integer.MAX_VALUE);
         textField.setGuiResponder(new GuiPageButtonList.GuiResponder() {
             @Override
             public void setEntryValue(int i, boolean b) {
@@ -39,7 +39,7 @@ public class ElementTextField extends ElementBase {
 
         layoutConstraint = new LayoutConstraint()
                 .setMinSize(new Vec2(50, 20))
-                .setMaxSize(new Vec2(99999, 20));
+                .setMaxSize(new Vec2(Integer.MAX_VALUE, 20));
     }
 
     public String getText() {

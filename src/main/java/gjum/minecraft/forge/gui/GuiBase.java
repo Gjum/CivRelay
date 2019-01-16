@@ -1,5 +1,6 @@
-package gjum.minecraft.forge.civrelay.gui;
+package gjum.minecraft.forge.gui;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
@@ -17,6 +18,7 @@ public class GuiBase extends GuiScreen {
 
     public GuiBase(GuiScreen parentScreen) {
         this.parentScreen = parentScreen;
+        this.mc = Minecraft.getMinecraft();
     }
 
     public void buildLayout() {
@@ -35,10 +37,19 @@ public class GuiBase extends GuiScreen {
         layoutRoot = null;
     }
 
+    protected void handleError(Exception e) {
+        e.printStackTrace();
+        mc.displayGuiScreen(parentScreen);
+    }
+
     @Override
     public void initGui() {
         Keyboard.enableRepeatEvents(true);
-        rebuild();
+        try {
+            rebuild();
+        } catch (Exception e) {
+            handleError(e);
+        }
     }
 
     @Override
@@ -79,33 +90,45 @@ public class GuiBase extends GuiScreen {
 
     @Override
     public void actionPerformed(GuiButton button) {
-        if (!button.enabled) return;
+        try {
+            if (!button.enabled) return;
 
-        for (ElementBase element : elements) {
-            if (element.getId() == button.id) {
-                element.onButtonClicked();
-                break;
+            for (ElementBase element : elements) {
+                if (element.getId() == button.id) {
+                    element.onButtonClicked();
+                    break;
+                }
             }
+        } catch (Exception e) {
+            handleError(e);
         }
     }
 
     @Override
     public void keyTyped(char keyChar, int keyCode) {
-        for (GuiTextField textField : textFieldList) {
-            if (textField.isFocused()) {
-                textField.textboxKeyTyped(keyChar, keyCode);
+        try {
+            for (GuiTextField textField : textFieldList) {
+                if (textField.isFocused()) {
+                    textField.textboxKeyTyped(keyChar, keyCode);
+                }
             }
-        }
-        if (keyCode == Keyboard.KEY_ESCAPE) {
-            mc.displayGuiScreen(parentScreen);
+            if (keyCode == Keyboard.KEY_ESCAPE) {
+                mc.displayGuiScreen(parentScreen);
+            }
+        } catch (Exception e) {
+            handleError(e);
         }
     }
 
     @Override
     public void mouseClicked(int x, int y, int mouseButton) throws IOException {
-        super.mouseClicked(x, y, mouseButton);
-        for (GuiTextField textField : textFieldList) {
-            textField.mouseClicked(x, y, mouseButton);
+        try {
+            super.mouseClicked(x, y, mouseButton);
+            for (GuiTextField textField : textFieldList) {
+                textField.mouseClicked(x, y, mouseButton);
+            }
+        } catch (Exception e) {
+            handleError(e);
         }
     }
 

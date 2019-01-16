@@ -1,10 +1,10 @@
-package gjum.minecraft.forge.civrelay.gui;
+package gjum.minecraft.forge.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 
-import java.awt.*;
+import java.awt.Color;
 
 public abstract class ElementBase implements LayoutBoundingBox {
     private static int idCounter = 0;
@@ -23,7 +23,7 @@ public abstract class ElementBase implements LayoutBoundingBox {
 
     public static int getStringWidth(String s) {
         if (mc == null || mc.fontRenderer == null) {
-            return s.length() * 3;
+            return s.length() * 5;
         }
         return mc.fontRenderer.getStringWidth(s);
     }
@@ -34,8 +34,8 @@ public abstract class ElementBase implements LayoutBoundingBox {
     }
 
     public ElementBase setWeight(Vec2 weight) {
-        int maxX = weight.x > 0 ? 99999 : getLayoutConstraint().getMaxSize().x;
-        int maxY = weight.y > 0 ? 99999 : getLayoutConstraint().getMaxSize().y;
+        int maxX = weight.x > 0 ? Integer.MAX_VALUE : getLayoutConstraint().getMaxSize().x;
+        int maxY = weight.y > 0 ? Integer.MAX_VALUE : getLayoutConstraint().getMaxSize().y;
         getLayoutConstraint().setWeight(weight).setMaxSize(new Vec2(maxX, maxY));
         return this;
     }

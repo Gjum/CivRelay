@@ -1,8 +1,8 @@
-package gjum.minecraft.forge.civrelay.gui;
+package gjum.minecraft.forge.gui;
 
 import net.minecraft.client.gui.GuiButton;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.function.Consumer;
 
 public class ElementCycleButton extends ElementBase {

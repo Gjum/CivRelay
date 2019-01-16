@@ -2,17 +2,17 @@ package gjum.minecraft.forge.civrelay;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import gjum.minecraft.forge.civrelay.gui.*;
+import gjum.minecraft.forge.gui.*;
 import net.minecraft.client.gui.GuiScreen;
 
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
 import static gjum.minecraft.forge.civrelay.CivRelayMod.MOD_NAME;
-import static gjum.minecraft.forge.civrelay.gui.ElementLabel.Alignment.ALIGN_CENTER;
-import static gjum.minecraft.forge.civrelay.gui.ElementLabel.Alignment.ALIGN_LEFT;
-import static gjum.minecraft.forge.civrelay.gui.Vec2.Direction.COLUMN;
-import static gjum.minecraft.forge.civrelay.gui.Vec2.Direction.ROW;
+import static gjum.minecraft.forge.gui.ElementLabel.Alignment.ALIGN_CENTER;
+import static gjum.minecraft.forge.gui.ElementLabel.Alignment.ALIGN_LEFT;
+import static gjum.minecraft.forge.gui.Vec2.Direction.COLUMN;
+import static gjum.minecraft.forge.gui.Vec2.Direction.ROW;
 
 public class FilterGui extends GuiBase {
     private static final String[] eventTypes = Arrays.stream(Event.Type.values()).map(Enum::name).toArray(String[]::new);

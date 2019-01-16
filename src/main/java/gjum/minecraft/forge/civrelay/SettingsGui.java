@@ -1,15 +1,15 @@
 package gjum.minecraft.forge.civrelay;
 
-import gjum.minecraft.forge.civrelay.gui.*;
+import gjum.minecraft.forge.gui.*;
 import net.minecraft.client.gui.GuiScreen;
 
 import java.awt.*;
 
 import static gjum.minecraft.forge.civrelay.CivRelayMod.MOD_NAME;
-import static gjum.minecraft.forge.civrelay.gui.ElementLabel.Alignment.ALIGN_CENTER;
-import static gjum.minecraft.forge.civrelay.gui.ElementLabel.Alignment.ALIGN_LEFT;
-import static gjum.minecraft.forge.civrelay.gui.Vec2.Direction.COLUMN;
-import static gjum.minecraft.forge.civrelay.gui.Vec2.Direction.ROW;
+import static gjum.minecraft.forge.gui.ElementLabel.Alignment.ALIGN_CENTER;
+import static gjum.minecraft.forge.gui.ElementLabel.Alignment.ALIGN_LEFT;
+import static gjum.minecraft.forge.gui.Vec2.Direction.COLUMN;
+import static gjum.minecraft.forge.gui.Vec2.Direction.ROW;
 
 public class SettingsGui extends GuiBase {
     public SettingsGui(GuiScreen parentScreen) {
