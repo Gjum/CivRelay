@@ -55,9 +55,9 @@ public class Formatter {
         return str;
     }
 
-    private static String safeStr(String str) {
-        return j.toJson(str)
-                .replaceAll("^\"|\"$", "")
-                .replaceAll("\\$", "\\\\\\$");
+    public static String safeStr(String str) {
+        return str.replaceAll("\\\\", "\\\\\\\\")
+                .replaceAll("\"", "\\\\\"")
+                .replaceAll("\n", "\\\\n");
     }
 }
