@@ -52,6 +52,8 @@ public class CivRelayMod {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         logger = event.getModLog();
+        logger.info(String.format("%s version %s built at %s", MOD_NAME, VERSION, BUILD_TIME));
+
         final File configFile = new File(event.getSuggestedConfigurationFile()
                 .getAbsolutePath().replaceAll("\\.[^.]+$", ".json"));
         Config.instance.load(configFile);
@@ -60,8 +62,6 @@ public class CivRelayMod {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        logger.info(String.format("%s version %s built at %s", MOD_NAME, VERSION, BUILD_TIME));
-
         MinecraftForge.EVENT_BUS.register(this);
 
         ClientRegistry.registerKeyBinding(toggleEnabledKey);
