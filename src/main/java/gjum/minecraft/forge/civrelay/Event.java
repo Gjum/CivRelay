@@ -1,5 +1,7 @@
 package gjum.minecraft.forge.civrelay;
 
+import net.minecraft.util.math.Vec3i;
+
 public interface Event {
     enum Type {
         SNITCH("Snitch"),
@@ -39,9 +41,5 @@ public interface Event {
 
     String getWorld();
 
-    int getX();
-
-    int getY();
-
-    int getZ();
+    Vec3i getPos();
 }

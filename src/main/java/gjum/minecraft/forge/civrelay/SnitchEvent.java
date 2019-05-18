@@ -1,6 +1,7 @@
 package gjum.minecraft.forge.civrelay;
 
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
@@ -123,18 +124,8 @@ public class SnitchEvent implements Event {
     }
 
     @Override
-    public int getX() {
-        return pos.getX();
-    }
-
-    @Override
-    public int getY() {
-        return pos.getY();
-    }
-
-    @Override
-    public int getZ() {
-        return pos.getZ();
+    public Vec3i getPos() {
+        return pos;
     }
 
     private static HoverEvent getHoverEvent(ITextComponent rawMessage) {

@@ -1,5 +1,6 @@
 package gjum.minecraft.forge.civrelay;
 
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 
@@ -86,17 +87,7 @@ public class ChatEvent implements Event {
     }
 
     @Override
-    public int getX() {
-        return 0;
-    }
-
-    @Override
-    public int getY() {
-        return 0;
-    }
-
-    @Override
-    public int getZ() {
-        return 0;
+    public Vec3i getPos() {
+        return null;
     }
 }

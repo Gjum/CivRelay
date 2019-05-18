@@ -1,5 +1,7 @@
 package gjum.minecraft.forge.civrelay;
 
+import net.minecraft.util.math.Vec3i;
+
 public class PlayerStatusEvent implements Event {
 
     private final String player;
@@ -51,17 +53,7 @@ public class PlayerStatusEvent implements Event {
     }
 
     @Override
-    public int getX() {
-        return 0;
-    }
-
-    @Override
-    public int getY() {
-        return 0;
-    }
-
-    @Override
-    public int getZ() {
-        return 0;
+    public Vec3i getPos() {
+        return null;
     }
 }

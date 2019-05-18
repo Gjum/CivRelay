@@ -47,15 +47,30 @@ public class Condition {
                 .setNegate(negate);
     }
 
+    private static int getXHelper(Event event) {
+        if (event.getPos() == null) return 0;
+        else return event.getPos().getX();
+    }
+
+    private static int getYHelper(Event event) {
+        if (event.getPos() == null) return 0;
+        else return event.getPos().getY();
+    }
+
+    private static int getZHelper(Event event) {
+        if (event.getPos() == null) return 0;
+        else return event.getPos().getZ();
+    }
+
     enum Target {
         ACTION(Event::getAction),
         CHAT_MSG(Event::getChatMessage),
         GROUP(Event::getGroup),
         PLAYER(Event::getPlayer),
         SNITCH(Event::getSnitch),
-        X(Event::getX),
-        Y(Event::getY),
-        Z(Event::getZ);
+        X(Condition::getXHelper),
+        Y(Condition::getYHelper),
+        Z(Condition::getZHelper);
 
         private final Function<Event, Object> getValue;
 

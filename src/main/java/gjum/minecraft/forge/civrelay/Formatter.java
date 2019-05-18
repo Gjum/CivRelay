@@ -1,6 +1,7 @@
 package gjum.minecraft.forge.civrelay;
 
 import com.google.gson.Gson;
+import net.minecraft.util.math.Vec3i;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -31,26 +32,30 @@ public class Formatter {
         str = str.replaceAll("<timeUTC>", timeUtc);
         str = str.replaceAll("<timeUnix>", String.valueOf(timeUnix));
 
-        str = str.replaceAll("<event>", event.getType().description);
-        str = str.replaceAll("<action>", event.getAction());
-        str = str.replaceAll("<actionText>", event.getActionText());
-        str = str.replaceAll("<world>", event.getWorld());
+        if (event.getType() != null && event.getType().description != null)
+            str = str.replaceAll("<event>", event.getType().description);
+        if (event.getAction() != null) str = str.replaceAll("<action>", event.getAction());
+        if (event.getActionText() != null) str = str.replaceAll("<actionText>", event.getActionText());
+        if (event.getWorld() != null) str = str.replaceAll("<world>", event.getWorld());
 
-        str = str.replaceAll("<chatMsg>", safeStr(event.getChatMessage()));
-        str = str.replaceAll("<group>", safeStr(event.getGroup()));
-        str = str.replaceAll("<player>", safeStr(event.getPlayer()));
-        str = str.replaceAll("<snitch>", safeStr(event.getSnitch()));
+        if (event.getChatMessage() != null) str = str.replaceAll("<chatMsg>", safeStr(event.getChatMessage()));
+        if (event.getGroup() != null) str = str.replaceAll("<group>", safeStr(event.getGroup()));
+        if (event.getPlayer() != null) str = str.replaceAll("<player>", safeStr(event.getPlayer()));
+        if (event.getSnitch() != null) str = str.replaceAll("<snitch>", safeStr(event.getSnitch()));
 
-        str = str.replaceAll("<x>", String.valueOf(event.getX()));
-        str = str.replaceAll("<y>", String.valueOf(event.getY()));
-        str = str.replaceAll("<z>", String.valueOf(event.getZ()));
+        final Vec3i pos = event.getPos();
+        if (pos != null) {
+            str = str.replaceAll("<x>", String.valueOf(pos.getX()));
+            str = str.replaceAll("<y>", String.valueOf(pos.getY()));
+            str = str.replaceAll("<z>", String.valueOf(pos.getZ()));
 
-        final int rx = (event.getX() + 5) / 10 * 10 - (event.getX() < 0 ? 10 : 0);
-        final int ry = (event.getY() + 5) / 10 * 10 - (event.getY() < 0 ? 10 : 0);
-        final int rz = (event.getZ() + 5) / 10 * 10 - (event.getZ() < 0 ? 10 : 0);
-        str = str.replaceAll("<rx>", String.valueOf(rx));
-        str = str.replaceAll("<ry>", String.valueOf(ry));
-        str = str.replaceAll("<rz>", String.valueOf(rz));
+            final int rx = (pos.getX() + 5) / 10 * 10 - (pos.getX() < 0 ? 10 : 0);
+            final int ry = (pos.getY() + 5) / 10 * 10 - (pos.getY() < 0 ? 10 : 0);
+            final int rz = (pos.getZ() + 5) / 10 * 10 - (pos.getZ() < 0 ? 10 : 0);
+            str = str.replaceAll("<rx>", String.valueOf(rx));
+            str = str.replaceAll("<ry>", String.valueOf(ry));
+            str = str.replaceAll("<rz>", String.valueOf(rz));
+        }
 
         return str;
     }
