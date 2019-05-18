@@ -157,11 +157,11 @@ public class FilterGui extends GuiBase {
                     .add(new LayoutSpacer(margin))
 
                     .add(new ElementCycleButton(this, status -> {
-                        if ("!".equals(status)) {
+                        if ("X!".equals(status)) {
                             filter.conditions.remove(condition);
                             rebuild();
                         }
-                    }, "X", "X", "X?", "!"));
+                    }, "X", "X", "X?", "X!"));
 
             elementsContainer.add(filterRow);
         }
