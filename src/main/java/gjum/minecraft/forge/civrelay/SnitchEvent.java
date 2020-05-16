@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 import static gjum.minecraft.forge.civrelay.Event.Action.*;
 
 public class SnitchEvent implements Event {
-    public static final Pattern snitchAlertPattern = Pattern.compile("\\s*\\*\\s*([^\\s]*)\\s\\b(entered snitch at|logged out in snitch at|logged in to snitch at)\\b\\s*([^\\s]*)\\s\\[([^\\]]*)\\s([-\\d]*)\\s([-\\d]*)\\s([-\\d]*)\\]");
+    public static final Pattern snitchAlertPattern = Pattern.compile("\\s*\\*\\s*([^\\s]*)\\s\\b(entered snitch at|logged out in snitch at|logged in to snitch at)\\b\\s*([^\\s]*)\\s\\[([^\\]]*)\\s([-\\d]*)\\s([-\\d]*)\\s([-\\d]*)\\].*");
     public static final Pattern snitchAlertHoverPattern = Pattern.compile("^(?i)\\s*Location:\\s*\\[(\\S+?) (-?[0-9]+) (-?[0-9]+) (-?[0-9]+)\\]\\s*Group:\\s*(\\S+?)\\s*Type:\\s*(Entry|Logging)\\s*(?:Cull:\\s*([0-9]+\\.[0-9]+)h?)?\\s*(?:Previous name:\\s*(\\S+?))?\\s*(?:Name:\\s*(\\S+?))?\\s*");
 
     public final String playerName;
