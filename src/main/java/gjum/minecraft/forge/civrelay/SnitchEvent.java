@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 import static gjum.minecraft.forge.civrelay.Event.Action.*;
 
 public class SnitchEvent implements Event {
-    public static final Pattern snitchAlertPattern = Pattern.compile("\\s*\\*\\s*([^\\s]*)\\s\\b(entered snitch at|logged out in snitch at|logged in to snitch at)\\b\\s*([^\\s]*)\\s\\[([^\\]]*)\\s([-\\d]*)\\s([-\\d]*)\\s([-\\d]*)\\].*");
+    public static final Pattern snitchAlertPattern = Pattern.compile("\\s*(Enter|Login|Logout)\\s+([A-Za-z0-9_]+)\\s+([^\\s]*)\\s*\\[(?:([^\\]]*)\\s+)?([-\\d]*)\\s+([-\\d]*)\\s+([-\\d]*)\\].*");
     public static final Pattern snitchAlertHoverPattern = Pattern.compile("^(?i)\\s*Location:\\s*\\[(\\S+?) (-?[0-9]+) (-?[0-9]+) (-?[0-9]+)\\]\\s*Group:\\s*(\\S+?)\\s*Type:\\s*(Entry|Logging)\\s*(?:Cull:\\s*([0-9]+\\.[0-9]+)h?)?\\s*(?:Previous name:\\s*(\\S+?))?\\s*(?:Name:\\s*(\\S+?))?\\s*");
 
     public final String playerName;
@@ -39,9 +39,9 @@ public class SnitchEvent implements Event {
     }
 
     private static Action actionFromSnitchMatch(String actionText) {
-        return "entered snitch at".equals(actionText) ? ENTER :
-                "logged in to snitch at".equals(actionText) ? LOGIN :
-                        "logged out in snitch at".equals(actionText) ? LOGOUT :
+        return "Enter".equals(actionText) ? ENTER :
+                "Login".equals(actionText) ? LOGIN :
+                        "Logout".equals(actionText) ? LOGOUT :
                                 UNKNOWN;
     }
 
@@ -73,8 +73,8 @@ public class SnitchEvent implements Event {
             }
         }
 
-        String playerName = matcher.group(1);
-        String activity = matcher.group(2);
+        String activity = matcher.group(1);
+        String playerName = matcher.group(2);
         String snitchName = matcher.group(3);
         String worldName = matcher.group(4);
         int x = Integer.parseInt(matcher.group(5));
